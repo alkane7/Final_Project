@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Glucose Visualization</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Daily Glucose Visualization</h1>
+
+  <div class="controls">
+    <label for="person-select">Select Person:</label>
+    <select id="person-select"></select>
+
+    <label for="date-select">Select Date:</label>
+    <select id="date-select"></select>
+
+    <button id="reset-view" style="margin-bottom: 10px;">🔄 Reset View</button>
+  </div>
+
+  <div id="tooltip" class="tooltip"></div>
+
+  <div id="chart"></div>
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
