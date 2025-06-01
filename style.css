@@ -12,10 +12,10 @@ body, html {
 
 /* 容器居中 */
 .container {
-  max-width: 1300px;  /* ✅ 改宽一点 */
-  width: 100%;
-  padding: 20px;
+  width: 98%;
+  max-width: 1400px;
   margin: 0 auto;
+  padding: 20px;
 }
 
 
