@@ -1,12 +1,14 @@
 const margin = { top: 50, right: 30, bottom: 50, left: 60 },
-      width = 1200 - margin.left - margin.right,
+      width = 650 - margin.left - margin.right,
       height = 500 - margin.top - margin.bottom;
 
 
 const svg = d3.select("#chart")
   .append("svg")
-  .attr("width", width + margin.left + margin.right)
-  .attr("height", height + margin.top + margin.bottom)
+  .attr("viewBox", [0, 0, width + margin.left + margin.right, height + margin.top + margin.bottom])
+  .attr("preserveAspectRatio", "xMidYMid meet")
+  .style("width", "100%")
+  .style("height", "auto")
   .append("g")
   .attr("transform", `translate(${margin.left},${margin.top})`);
 
@@ -255,9 +257,34 @@ d3.csv("dexcom_with_food.csv").then(rawData => {
             html += `</div>`;
           
             tooltip.html(html)
-              .style("left", (event.pageX + 12) + "px")
-              .style("top", (event.pageY - 28) + "px")
-              .classed("show", true);
+              // .style("left", (event.pageX + 12) + "px")
+              // .style("top", (event.pageY - 28) + "px")
+              // .classed("show", true);
+
+            requestAnimationFrame(() => {
+              const tooltipNode = tooltip.node();
+              const tooltipWidth = tooltipNode.offsetWidth;
+              const tooltipHeight = tooltipNode.offsetHeight;
+          
+              const padding = 12; // 与鼠标距离
+              let x = event.pageX + padding;
+              let y = event.pageY + padding;
+          
+              // ⛔️ 屏幕右边界：往左偏移
+              if (x + tooltipWidth > window.innerWidth) {
+                x = event.pageX - tooltipWidth - padding;
+              }
+          
+              // ⛔️ 屏幕底部边界：往上偏移
+              if (y + tooltipHeight > window.innerHeight) {
+                y = event.pageY - tooltipHeight - padding;
+              }
+          
+              tooltip
+                .style("left", `${x}px`)
+                .style("top", `${y}px`)
+                .classed("show", true);
+            });
           })
           .on("mouseout", () => {
             tooltip.classed("show", false);

@@ -6,21 +6,44 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Daily Glucose Visualization</h1>
+  <div class="container">
 
-  <div class="controls">
-    <label for="person-select">Select Person:</label>
-    <select id="person-select"></select>
+    <!-- ✅ 放在三栏布局外部的标题 -->
+    <h1>Daily Glucose</h1>
 
-    <label for="date-select">Select Date:</label>
-    <select id="date-select"></select>
+    <div class="three-column-layout">
 
-    <button id="reset-view" style="margin-bottom: 10px;">🔄 Reset View</button>
+      <!-- 左栏：引导说明 -->
+      <div class="column left-column">
+        <h2>Welcome!</h2>
+        <p>This dashboard visualizes daily glucose trends per person.</p>
+        <p>Select a person and a specific date to view their glucose levels throughout the day. You can zoom in by brushing over the chart, and reset anytime.</p>
+        <p>Red dots indicate glucose readings after meals, while blue dots are standard readings.</p>
+      </div>
+
+      <!-- 中栏：控件区 -->
+      <div class="column center-column">
+        <div class="controls">
+          <label for="person-select">Person:</label>
+          <select id="person-select"></select>
+
+          <label for="date-select">Date:</label>
+          <select id="date-select"></select>
+
+          <button id="reset-view">🔄 Reset View</button>
+        </div>
+      </div>
+
+      <!-- 右栏：图表区 -->
+      <div class="column right-column">
+        <div id="chart"></div>
+      </div>
+
+    </div>
   </div>
 
+  <!-- tooltip 放在 container 外部也可以 -->
   <div id="tooltip" class="tooltip"></div>
-
-  <div id="chart"></div>
 
   <script src="https://d3js.org/d3.v7.min.js"></script>
   <script src="script.js"></script>
