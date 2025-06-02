@@ -10,16 +10,15 @@ body, html {
   min-height: 100vh;
 }
 
-/* 容器居中 */
+/* 容器居中且自适应宽度 */
 .container {
   width: 98%;
-  /* max-width: 1400px; */
+  max-width: 1400px;
   margin: 0 auto;
   padding: 20px;
 }
 
-
-/* 顶部标题 */
+/* 页面主标题 */
 h1 {
   text-align: center;
   font-size: 28px;
@@ -27,54 +26,46 @@ h1 {
   margin: 40px 0 32px;
 }
 
-/* 三栏布局 */
-.three-column-layout {
+/* ✅ 两栏布局（控件+说明 | 图表） */
+.two-column-layout {
   display: flex;
   flex-direction: row;
   gap: 24px;
-  align-items: flex-start;
+  align-items: stretch;
 }
 
-/* 不等宽设置 */
+/* 左栏（控件 + 说明） */
 .left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   flex: 1.3;
-  min-width: 260px;
-}
-.center-column {
-  flex: 0.7;
-  max-width: 220px;
-}
-.right-column {
-  flex: 2;
-  min-width: 400px;
-}
-
-/* 三栏通用卡片风格 */
-.left-column,
-.center-column,
-.right-column {
-  background: #fff;
+  min-width: 280px;
+  /* background: #f5fff8; */
+  background: white;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
   border: 1px solid #e0e0e0;
   box-sizing: border-box;
+  height: 680px;
+  
 }
 
+/* 控件区 */
 .controls {
   display: flex;
   flex-direction: column;
   align-items: stretch;
   gap: 16px;
-  margin-bottom: 24px;
 }
+
 label {
   font-weight: 600;
   font-size: 15px;
   margin-bottom: 4px;
 }
 
-/* 控件样式 */
 select, button {
   padding: 8px 12px;
   font-size: 14px;
@@ -83,10 +74,12 @@ select, button {
   background-color: #fff;
   transition: all 0.2s ease;
 }
+
 select:focus {
   outline: none;
   border-color: #2E7D32;
 }
+
 button {
   border: 1px solid #81C784;
   background-color: #81C784;
@@ -94,25 +87,46 @@ button {
   font-weight: 600;
   cursor: pointer;
 }
+
 button:hover {
   background-color: #2E7D32;
 }
 
-/* 右栏图表区域 */
-.right-column {
-  position: relative;
-  margin: 0 auto;
+/* 说明区域 */
+.instruction {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #444;
 }
-/* #chart {
+.instruction p {
+  margin-bottom: 12px;
+}
+
+/* 右栏（图表展示） */
+.right-column {
+  flex: 2;
+  min-width: 400px;
+  position: relative;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e0e0e0;
+  box-sizing: border-box;
+  height: 680px; /* ✅ 设置一个合适的固定高度，可按需调整 */
+  overflow: hidden;
+}
+
+#chart {
   display: flex;
   justify-content: center;
   margin-top: 20px;
   overflow-x: auto;
 }
 #chart svg {
-  max-width: 100%;
+  width: 100%;
   height: auto;
-} */
+}
 
 /* tooltip 样式 */
 .tooltip {
@@ -159,7 +173,7 @@ button:hover {
   margin-right: 10px;
 }
 
-/* Summary Statistics 样式 */
+/* Summary Statistics 样式（如需拓展） */
 .stat-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -182,18 +196,97 @@ button:hover {
   font-weight: bold;
 }
 
-/* 响应式布局 */
+/* 响应式布局：窄屏切换为垂直堆叠 */
 @media (max-width: 900px) {
   body {
     padding-top: 40px;
   }
-  .three-column-layout {
+  .two-column-layout {
     flex-direction: column;
     gap: 30px;
   }
   .left-column,
-  .center-column,
   .right-column {
     width: 100%;
   }
 }
+
+/* 横向控件卡片区域 */
+.control-card {
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+}
+
+.controls-horizontal {
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 控件统一尺寸 */
+.control-group select,
+.control-group button {
+  min-width: 140px;
+}
+
+/* 单独说明卡片区域 */
+.instruction-card {
+  flex-grow: 1;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+
+  /* ✅ 添加以下两行 */
+  overflow-y: auto;
+  max-height: 100%; 
+}
+
+.instruction-card::-webkit-scrollbar {
+  width: 6px;
+}
+.instruction-card::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 4px;
+}
+.instruction-card::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.control-legend {
+  display: flex;
+  gap: 20px;
+  font-size: 14px;
+  align-items: center;
+  margin-top: 12px;
+  padding-top: 8px;
+  border-top: 1px solid #eee;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.blue-dot {
+  background-color: #1976d2;
+}
+
+.red-dot {
+  background-color: red;
+}
+

@@ -14,7 +14,7 @@ const svg = d3.select("#chart")
 
 let dataByPerson = new Map();
 
-d3.csv("dexcom_with_food.csv").then(rawData => {
+d3.csv("dexcom_with_food_updated.csv").then(rawData => {
     const data = rawData.map(d => {
       const rawTime = d["Timestamp (YYYY-MM-DDThh:mm:ss)"];
       const ts = new Date(rawTime.replace(" ", "T"));  // 修复非 ISO 格式
