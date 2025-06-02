@@ -211,14 +211,25 @@ d3.csv("dexcom_with_food_updated.csv").then(rawData => {
 
         segments.forEach(segment => {
           if (segment.length >= 2) {
-            svg.append("path")
+            const linePath = svg.append("path")
               .datum(segment)
               .attr("fill", "none")
               .attr("stroke", "#007acc")
               .attr("stroke-width", 2)
               .attr("d", lineGenerator);
+        
+            // ✅ 添加线条绘制动画
+            const totalLength = linePath.node().getTotalLength();
+            linePath
+              .attr("stroke-dasharray", totalLength)
+              .attr("stroke-dashoffset", totalLength)
+              .transition()
+              .duration(1000)
+              .ease(d3.easeLinear)
+              .attr("stroke-dashoffset", 0);
           }
         });
+          
 
         svg.selectAll("circle")
           .data(data)
@@ -226,7 +237,12 @@ d3.csv("dexcom_with_food_updated.csv").then(rawData => {
           .attr("cx", d => x(d.timestamp))
           .attr("cy", d => y(+d["Glucose Value (mg/dL)"]))
           .attr("r", 4)
-          .attr("fill", d => d.eat_flag === "True" || d.eat_flag === true ? "red" : "#007acc");
+          .attr("fill", d => d.eat_flag === "True" || d.eat_flag === true ? "red" : "#007acc")
+          .attr("opacity", 0)  // 初始透明
+          .transition()
+          .delay((d, i) => i * 10)
+          .duration(300)
+          .attr("opacity", 1);
 
         // ✅ 独立统一 tooltip 绑定
         svg.selectAll("circle")
