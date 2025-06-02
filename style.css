@@ -13,7 +13,7 @@ body, html {
 /* 容器居中 */
 .container {
   width: 98%;
-  max-width: 1400px;
+  /* max-width: 1400px; */
   margin: 0 auto;
   padding: 20px;
 }
